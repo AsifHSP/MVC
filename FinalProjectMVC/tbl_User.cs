@@ -18,5 +18,9 @@ namespace FinalProjectMVC
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public string Gender { get; set; }
+        public Nullable<bool> InterestedInC_ { get; set; }
+        public Nullable<bool> InterestedInJavaScript { get; set; }
+        public Nullable<bool> InterestedInPython { get; set; }
     }
 }

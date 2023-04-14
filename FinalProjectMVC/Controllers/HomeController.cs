@@ -26,12 +26,16 @@ namespace FinalProjectMVC.Controllers
         public ActionResult Login(tbl_User objUser)
         {
             WebAppEntities db = new WebAppEntities();
-            var user = db.tbl_User.Where(x => x.UserName == objUser.UserName && x.Password == objUser.Password).FirstOrDefault();
-            if (user !=null)
+            var user = db.tbl_User.Where(x => x.UserName == objUser.UserName && x.Password == objUser.Password).Count();
+            if (user > 0)
             {
                 return RedirectToAction("ListUsers");
             }
-            return View();
+            else
+            {
+                return View();
+            }
+            
         }
         public ActionResult Register()
         {
@@ -53,6 +57,20 @@ namespace FinalProjectMVC.Controllers
             WebAppEntities db = new WebAppEntities();
             var users = db.tbl_User.ToList();
             return View(users);
+        }
+        public ActionResult UserProfile( int id)
+        {
+            WebAppEntities db = new WebAppEntities();
+           var user = db.tbl_User.Find(id);
+            return View(user);
+        }
+        [HttpPost]
+        public ActionResult UserProfile(tbl_User objUser)
+        {
+            WebAppEntities db = new WebAppEntities();
+            db.Entry(objUser).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
+            return View();
         }
     }
 }

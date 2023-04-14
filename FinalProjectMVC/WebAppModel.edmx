@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="WebAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="WebAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tbl_Category">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -30,14 +30,17 @@
           <Property Name="UserName" Type="nvarchar(max)" />
           <Property Name="Email" Type="nvarchar(max)" />
           <Property Name="Password" Type="nvarchar(max)" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="InterestedInC#" Type="bit" />
+          <Property Name="InterestedInJavaScript" Type="bit" />
+          <Property Name="InterestedInPython" Type="bit" />
         </EntityType>
         <EntityContainer Name="WebAppModelStoreContainer">
           <EntitySet Name="tbl_Category" EntityType="Self.tbl_Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Product" EntityType="Self.tbl_Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_User" EntityType="Self.tbl_User" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="WebAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -66,6 +69,10 @@
           <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="InterestedInC_" Type="Boolean" />
+          <Property Name="InterestedInJavaScript" Type="Boolean" />
+          <Property Name="InterestedInPython" Type="Boolean" />
         </EntityType>
         <EntityContainer Name="WebAppEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_Category" EntityType="Self.tbl_Category" />
@@ -100,6 +107,10 @@
           <EntitySetMapping Name="tbl_User">
             <EntityTypeMapping TypeName="WebAppModel.tbl_User">
               <MappingFragment StoreEntitySet="tbl_User">
+                <ScalarProperty Name="InterestedInPython" ColumnName="InterestedInPython" />
+                <ScalarProperty Name="InterestedInJavaScript" ColumnName="InterestedInJavaScript" />
+                <ScalarProperty Name="InterestedInC_" ColumnName="InterestedInC#" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
