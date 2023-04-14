@@ -22,5 +22,8 @@ namespace FinalProjectMVC
         public Nullable<bool> InterestedInC_ { get; set; }
         public Nullable<bool> InterestedInJavaScript { get; set; }
         public Nullable<bool> InterestedInPython { get; set; }
+        public Nullable<int> CityId { get; set; }
+    
+        public virtual tbl_City tbl_City { get; set; }
     }
 }

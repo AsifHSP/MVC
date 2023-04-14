@@ -62,15 +62,27 @@ namespace FinalProjectMVC.Controllers
         {
             WebAppEntities db = new WebAppEntities();
            var user = db.tbl_User.Find(id);
+
+            user.InterestedInC_ = (user.InterestedInC_== null)? false : user.InterestedInC_;
+            user.InterestedInJavaScript = (user.InterestedInJavaScript == null)? false : user.InterestedInJavaScript;
+            user.InterestedInPython = (user.InterestedInPython == null)? false : user.InterestedInPython;
+
+            //var cityList = db.tbl
+
             return View(user);
         }
         [HttpPost]
-        public ActionResult UserProfile(tbl_User objUser)
+        public ActionResult UserProfile(tbl_User objUser, string CSharp, string JavaScript, String Python)
         {
+
+            objUser.InterestedInC_ = (CSharp == "true") ? true : false;
+            objUser.InterestedInJavaScript = (JavaScript == "true") ? true : false;
+            objUser.InterestedInPython = (Python == "true") ? true : false;
+
             WebAppEntities db = new WebAppEntities();
             db.Entry(objUser).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
-            return View();
+            return RedirectToAction("ListUsers");
         }
     }
 }

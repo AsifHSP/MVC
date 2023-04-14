@@ -129,16 +129,20 @@
     <Content Include="CustomStylesheets\RegisterStylesheet.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\login.jpg" />
+    <Content Include="Images\profile.jpg" />
     <Content Include="Images\user.jpg" />
     <Content Include="Web.config" />
     <Content Include="WebAppModel.Context.tt">
+      <DependentUpon>WebAppModel.edmx</DependentUpon>
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WebAppModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="WebAppModel.edmx.diagram">
       <DependentUpon>WebAppModel.edmx</DependentUpon>
     </Content>
     <Content Include="WebAppModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>WebAppModel.edmx</DependentUpon>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>WebAppModel.cs</LastGenOutput>
     </Content>
   </ItemGroup>
@@ -149,7 +153,13 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>WebAppModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="tbl_Category.cs">
+      <DependentUpon>WebAppModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tbl_City.cs">
       <DependentUpon>WebAppModel.tt</DependentUpon>
     </Compile>
     <Compile Include="tbl_Product.cs">
@@ -159,19 +169,19 @@
       <DependentUpon>WebAppModel.tt</DependentUpon>
     </Compile>
     <Compile Include="WebAppModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>WebAppModel.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="WebAppModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>WebAppModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="WebAppModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>WebAppModel.edmx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -184,19 +194,13 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\ListUsers.cshtml" />
+    <Content Include="Views\Home\UserProfile.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
-    <EntityDeploy Include="WebAppModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WebAppModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="WebAppModel.edmx.diagram">
-      <DependentUpon>WebAppModel.edmx</DependentUpon>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -204,6 +208,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="WebAppModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>WebAppModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

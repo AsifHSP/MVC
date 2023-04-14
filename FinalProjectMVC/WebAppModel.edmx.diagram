@@ -8,6 +8,9 @@
         <EntityTypeShape EntityType="WebAppModel.tbl_Category" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WebAppModel.tbl_Product" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WebAppModel.tbl_User" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebAppModel.sysdiagram" Width="1.5" PointX="3.375" PointY="3.75" />
+        <EntityTypeShape EntityType="WebAppModel.tbl_City" Width="1.5" PointX="0.75" PointY="8.375" />
+        <AssociationConnector Association="WebAppModel.FK_tbl_User_tbl_City" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

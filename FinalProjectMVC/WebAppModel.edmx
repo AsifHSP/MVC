@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="WebAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="tbl_Category">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -12,6 +22,13 @@
           <Property Name="CategoryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Price" Type="decimal" Precision="10" Scale="4" />
+        </EntityType>
+        <EntityType Name="tbl_City">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="tbl_Product">
           <Key>
@@ -34,11 +51,30 @@
           <Property Name="InterestedInC#" Type="bit" />
           <Property Name="InterestedInJavaScript" Type="bit" />
           <Property Name="InterestedInPython" Type="bit" />
+          <Property Name="CityId" Type="int" />
         </EntityType>
+        <Association Name="FK_tbl_User_tbl_City">
+          <End Role="tbl_City" Type="Self.tbl_City" Multiplicity="0..1" />
+          <End Role="tbl_User" Type="Self.tbl_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_City">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="tbl_User">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="WebAppModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Category" EntityType="Self.tbl_Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_City" EntityType="Self.tbl_City" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Product" EntityType="Self.tbl_Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_User" EntityType="Self.tbl_User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tbl_User_tbl_City" Association="Self.FK_tbl_User_tbl_City">
+            <End Role="tbl_City" EntitySet="tbl_City" />
+            <End Role="tbl_User" EntitySet="tbl_User" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -73,12 +109,50 @@
           <Property Name="InterestedInC_" Type="Boolean" />
           <Property Name="InterestedInJavaScript" Type="Boolean" />
           <Property Name="InterestedInPython" Type="Boolean" />
+          <Property Name="CityId" Type="Int32" />
+          <NavigationProperty Name="tbl_City" Relationship="WebAppModel.FK_tbl_User_tbl_City" FromRole="tbl_User" ToRole="tbl_City" />
         </EntityType>
         <EntityContainer Name="WebAppEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tbl_Category" EntityType="Self.tbl_Category" />
           <EntitySet Name="tbl_Product" EntityType="Self.tbl_Product" />
           <EntitySet Name="tbl_User" EntityType="Self.tbl_User" />
+          <EntitySet Name="sysdiagrams" EntityType="WebAppModel.sysdiagram" />
+          <EntitySet Name="tbl_City" EntityType="WebAppModel.tbl_City" />
+          <AssociationSet Name="FK_tbl_User_tbl_City" Association="WebAppModel.FK_tbl_User_tbl_City">
+            <End Role="tbl_City" EntitySet="tbl_City" />
+            <End Role="tbl_User" EntitySet="tbl_User" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbl_City">
+          <Key>
+            <PropertyRef Name="CityId" />
+          </Key>
+          <Property Name="CityId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_User" Relationship="WebAppModel.FK_tbl_User_tbl_City" FromRole="tbl_City" ToRole="tbl_User" />
+        </EntityType>
+        <Association Name="FK_tbl_User_tbl_City">
+          <End Type="WebAppModel.tbl_City" Role="tbl_City" Multiplicity="0..1" />
+          <End Type="WebAppModel.tbl_User" Role="tbl_User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_City">
+              <PropertyRef Name="CityId" />
+            </Principal>
+            <Dependent Role="tbl_User">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -107,6 +181,7 @@
           <EntitySetMapping Name="tbl_User">
             <EntityTypeMapping TypeName="WebAppModel.tbl_User">
               <MappingFragment StoreEntitySet="tbl_User">
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
                 <ScalarProperty Name="InterestedInPython" ColumnName="InterestedInPython" />
                 <ScalarProperty Name="InterestedInJavaScript" ColumnName="InterestedInJavaScript" />
                 <ScalarProperty Name="InterestedInC_" ColumnName="InterestedInC#" />
@@ -115,6 +190,25 @@
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="WebAppModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_City">
+            <EntityTypeMapping TypeName="WebAppModel.tbl_City">
+              <MappingFragment StoreEntitySet="tbl_City">
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

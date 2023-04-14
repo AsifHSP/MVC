@@ -55,14 +55,26 @@
                 </label>
                 <div class="col-md-10">
                     <label class="checkbox-inline">
+                        @Html.CheckBox("CSharp", Model.InterestedInC_.Value)
                         C#
                     </label>
                     <label class="checkbox-inline">
+                        @Html.CheckBox("JavaScript", Model.InterestedInJavaScript.Value)
                         JavaScript
                     </label>
                     <label class="checkbox-inline">
-                       Python
+                        @Html.CheckBox("Python", Model.InterestedInPython.Value)
+                        Python
                     </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-lable" col-md-2>
+                    City
+                </label>
+                <div class="col-md-10">
+                    @*@Html.DropDownListFor(model => model.CityId)*@
                 </div>
             </div>
             <div class="form-group">
